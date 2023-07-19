@@ -6,6 +6,10 @@ body{
     background-color: #101623;
     color: white;
 }
+.header{
+    background-color: #15161a;
+}
 .card{
     background-color:rgb(19, 19, 19);
+    
 }
