@@ -31,7 +31,7 @@ const Cards = () => {
                 <div key={i} className='card font-medium shadow-lg p-2 hover:-translate-y-3 cursor-pointe  mt-6 transition-all duration-500'>
                 <img className="h-72" src={e.image} alt="" />
                 <h1><span className='text-gray-500'>Name:</span> {e.title}</h1>
-                <h1 className='flex items-center'><span className='text-gray-500 mr-1'>Rating:</span> 
+                <h1 className='flex items-center'><span className='text-gray-500 mr-1'>Rating::</span> 
                 <ReactStars size={20} half={true} value={5} edit={false} />
                 </h1>
                 <h1><span className='text-gray-500'>Year:</span> {e.year}</h1>
