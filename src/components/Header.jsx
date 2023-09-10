@@ -6,11 +6,11 @@ import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <div className="sticky z-10 header text-3xl flex justify-between items-center font-bold p-3 border-b-2 ">
-      <span>
+     <Link to={"/"}> <span>
         <span className="text-red-500">F</span>ilm
         <span className="text-red-500">F</span>lix
       </span>
-
+      </Link>
       <Link to={'/addmovie'}>
       <h1 className="text-lg text-white flex items-center cursor-pointer">
         <Button>

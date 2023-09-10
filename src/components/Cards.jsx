@@ -15,7 +15,7 @@ const Cards = () => {
             setLoading(true);
             const _data = await getDocs(moviesRef);
             _data.forEach((doc)=>{
-                setData((prv)=>[...prv,doc.data()])
+                setData((prv)=>[...prv,{...(doc.data()), id: doc.id}])
             })
             setLoading(false);
         }
@@ -23,15 +23,15 @@ const Cards = () => {
     },[])
 
     return (
-        <div className='flex flex-wrap justify-between p-3 mt-2 '>
-        {loading ?<div className="w-full flex justify-center items-center h-96 "><Grid color="#8B5CF6"  height={80} width="150"  /></div> :
+        <div className='flex flex-wrap justify-between px-3 mt-2 '>
+        {loading ?<div className="w-full flex justify-center items-center min-h-screen "><Dna  height={100} width="150"  /></div> :
         
         data.map((e,i) => {
             return(
                 <div key={i} className='card font-medium shadow-lg p-2 hover:-translate-y-3 cursor-pointe  mt-6 transition-all duration-500'>
-                <img className="h-72" src={e.image} alt="" />
+                <img className="h-60 md:h-72" src={e.image} alt="" />
                 <h1><span className='text-gray-500'>Name:</span> {e.title}</h1>
-                <h1 className='flex items-center'><span className='text-gray-500 mr-1'>Rating::</span> 
+                <h1 className='flex items-center'><span className='text-gray-500 mr-1'>Rating:</span> 
                 <ReactStars size={20} half={true} value={5} edit={false} />
                 </h1>
                 <h1><span className='text-gray-500'>Year:</span> {e.year}</h1>

@@ -13,7 +13,7 @@ const Addmovie = () => {
     });
     const [loading, setLoading] = useState(false);
 
-    const adMovie = async () => {
+    const addMovie = async () => {
         setLoading(true);
         try{
             await addDoc(moviesRef,form);
@@ -110,7 +110,7 @@ const Addmovie = () => {
                                 </div>
                             </div>
                             <div class="p-2 w-full">
-                                <button onClick={adMovie} class="flex mx-auto text-white bg-transparent border-2 border-red-500 py-2 px-8 focus:outline-none hover:bg-red-500   rounded  text-lg">
+                                <button onClick={addMovie} class="flex mx-auto text-white bg-transparent border-2 border-red-500 py-2 px-8 focus:outline-none hover:bg-red-500   rounded  text-lg">
                                     {loading ? <TailSpin height={25} color="white" /> : "Submit"}
                                 </button>
                             </div>
