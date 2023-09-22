@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { Audio,Dna,Grid } from 'react-loader-spinner';
 import ReactStars from 'react-stars';
 import { getDoc } from 'firebase/firestore';
-import { moviesRef } from '../firebase/Firebase';
-
+import { moviesRef } from "../firebase/Firebase";
+import { Link } from 'react-router-dom';
 
 const Cards = () => {
     const[data,setData]=useState([]);
@@ -28,6 +28,7 @@ const Cards = () => {
         
         data.map((e,i) => {
             return(
+                <Link to={`/detail/${e.id}`}>
                 <div key={i} className='card font-medium shadow-lg p-2 hover:-translate-y-3 cursor-pointe  mt-6 transition-all duration-500'>
                 <img className="h-60 md:h-72" src={e.image} alt="" />
                 <h1><span className='text-gray-500'>Name:</span> {e.title}</h1>
@@ -35,7 +36,7 @@ const Cards = () => {
                 <ReactStars size={20} half={true} value={5} edit={false} />
                 </h1>
                 <h1><span className='text-gray-500'>Year:</span> {e.year}</h1>
-            </div>
+            </div></Link>
             )})
         }
             

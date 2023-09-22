@@ -4,8 +4,9 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const Header = () => {
+
   return (
-    <div className="sticky z-10 header text-3xl flex justify-between items-center font-bold p-3 border-b-2 ">
+    <div className="sticky  z-50 header text-3xl flex justify-between items-center font-bold p-3 border-b-2 ">
      <Link to={"/"}> <span>
         <span className="text-red-500">F</span>ilm
         <span className="text-red-500">F</span>lix

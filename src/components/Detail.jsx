@@ -1,17 +1,59 @@
-import React from 'react'
-import ReactStars from 'react-stars'
+import React, { useEffect, useState } from "react";
+import ReactStars from "react-stars";
+import { useParams } from "react-router-dom";
+import { moviesRef } from '../firebase/Firebase';
+import { getDoc } from "firebase/firestore";  
+import { doc } from "firebase/firestore";
+import { db } from "../firebase/Firebase";
+import { Bars,ThreeCircles } from "react-loader-spinner";
+import Reviews from "./Review"
 
 const Detail = () => {
+  const {id} = useParams();
+  const [data, setData] = useState({
+    title: "",
+    year: "",
+    image: "",
+    description: "",
+    rating: 0,
+    rated: 0
+  });
+  const [loading, setLoading] = useState(false);
+  
+  useEffect(() => {
+    async function getData() {
+      setLoading(true);
+      const _doc = doc(db, "movies", id);
+      const _data = await getDoc(_doc);
+      setData(_data.data());
+      setLoading(false);
+    }
+    getData();
+  },[])
+
   return (
-    <div className='p-4 mt-4 flex w-full justify-center'>
-        <img src="https://rukminim2.flixcart.com/image/850/1000/k2gh30w0/poster/h/n/8/medium-avengers-endgame-hd-poster-wall-decor-size-12x18-inch-original-imafht6wyfzfjzcb.jpeg?q=90" alt="" className="h-96" />
-        <div className="ml-4 w-1/2">
-            <h1 className='text-3xl font-bold text-gray-400'>Star Wars <span className='text-xl'>(2014)</span></h1>
-            <ReactStars size={20} half={true} value={5} edit={false} />
-            <p className='mt-3'>Following a threat of revenge by the resurrected Emperor Palpatine, Kylo Ren obtains a Sith wayfinder that leads to the planet Exegol. There, he finds Palpatine, who reveals that he created Snoke to rule the First Order and lure Kylo to the dark side.
-            Following a threat of revenge by the resurrected Emperor Palpatine, Kylo Ren obtains a Sith wayfinder that leads to the planet Exegol. There, he finds Palpatine, who reveals that he created Snoke to rule the First Order and lure Kylo to the dark side.
-            Following a threat of revenge by the resurrected Emperor Palpatine, Kylo Ren obtains a Sith wayfinder that leads to the planet Exegol. There, he finds Palpatine, who reveals that he created Snoke to rule the First Order and lure Kylo to the dark side.</p>
-        </div>
+    <div className='p-4 mt-4 flex flex-col md:flex-row items-center md:items-start w-full justify-center'>
+    { loading ? <div className='h-96 mt-12 flex w-full justify-center items-center'><ThreeCircles height={70} color="white"/></div> : 
+      <>
+      <img className='h-96 block md:sticky top-24' src={data.image} />
+
+      <div className='md:ml-4 ml-0 w-full md:w-1/2'>
+        <h1 className='text-3xl font-bold text-gray-400'>{data.title} <span className='text-xl'>({data.year})</span></h1>
+
+        <ReactStars
+          size={20}
+          half={true}
+          value={4}
+          edit={false}
+        />
+
+        <p className='mt-2'>{data.description}</p>
+        <Reviews id={id}/>
+        
+        
+      </div>
+      </>
+    }
     </div>
   )
 }
