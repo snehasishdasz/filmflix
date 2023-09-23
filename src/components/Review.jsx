@@ -87,11 +87,17 @@ const Review = ({id,prevRating,userRated}) => {
         <div className='mt-5 p-1'>
         {data.map((e,i)=>{
           return(
-            <div className='p-2 w-full mt-2' key={i}>
-                <div className='flex'>
-                    <p className='text-yellow-500'>{e.name}</p>
-                    <p className='ml-2'>{new Date(e.timestamp).toLocaleString()}</p>
+            <div className='p-2 w-full border-b bg-slate-800 bg-opacity-60 border-gray-600 mt-2' key={i}>
+                <div className='flex items-center'>
+                    <p className='text-cyan-300'>{e.name}</p>
+                    <p className='ml-3 text-xs'>({new Date(e.timestamp).toLocaleString()})</p>
                 </div>
+                <ReactStars
+                    size={15}
+                    half={true}
+                    value={e.rating}
+                    edit={false}
+                />
                 <p>{e.thought}</p>
             </div>
           )
