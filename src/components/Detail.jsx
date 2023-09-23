@@ -43,12 +43,13 @@ const Detail = () => {
         <ReactStars
           size={20}
           half={true}
-          value={4}
+          value={data.rating/data.rated}
           edit={false}
         />
 
         <p className='mt-2'>{data.description}</p>
-        <Reviews id={id}/>
+
+        <Reviews id={id} prevRating={data.rating} userRated={data.rated}/>
         
         
       </div>

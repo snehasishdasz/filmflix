@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactStars from 'react-stars'
-import { reviewsRef } from '../firebase/Firebase'; 
-import { addDoc } from 'firebase/firestore';
-import { TailSpin } from 'react-loader-spinner';
+import { reviewsRef, db } from '../firebase/Firebase'; 
+import { addDoc , doc , updateDoc,query,where,getDocs} from 'firebase/firestore';
+import { TailSpin, ThreeDots } from 'react-loader-spinner';
 import swal from 'sweetalert';
 
-const Review = ({id}) => {
+const Review = ({id,prevRating,userRated}) => {
   const [rating,setRating]= useState(0);
   const [loading,setLoading]=useState(false);
+  const[reviewsLoading, setReviewsLoading]=useState(false);
   const[form,setForm]=useState("");
+  const [data,setData]=useState([]);
 
   const sendReview = async() =>{
     setLoading(true);
@@ -20,12 +22,21 @@ const Review = ({id}) => {
         thought: form,
         timestamp: new Date().getTime()
       })
+      const ref = doc(db,"movies",id)
+      await updateDoc(ref,{
+        rating: prevRating + rating,
+        rated: userRated+1
+      })
+
+
       swal({
         title: "Review Sent",
         icon: "success",
         buttons: false,
         timer: 3000
     })
+    setRating(0);
+    setForm("");
     }catch(error){
       swal({
         title: error.message ,
@@ -36,6 +47,24 @@ const Review = ({id}) => {
     }
     setLoading(false);
   }
+
+  //This part is use for get all the reviews and list it on the page.
+  useEffect(()=>{
+    async function getData(){
+      setReviewsLoading(true);
+      let quer = query(reviewsRef,where('movieid', '==', id))
+      const querySnapshot = await getDocs(quer);
+
+      querySnapshot.forEach((doc) =>{
+        setData((prev) => [...prev,doc.data()])
+      })
+
+      setReviewsLoading(false);
+    }
+    getData();
+  },[])
+
+
 
   return (
     <div className='mt-4 border-t-2 border-gray-700 w-full'>
@@ -52,6 +81,27 @@ const Review = ({id}) => {
         className='w-full p-2 outline-none bg-gray-800'
       />
       <button onClick={sendReview} className='w-full p-2 flex justify-center bg-green-600'>{loading ? <TailSpin height={20} color='white'/> : "Share" }</button>
+      {reviewsLoading ?
+            <div className='mt-6 flex justify-center'><ThreeDots height={10} color='white'/></div>
+        :
+        <div className='mt-5 p-1'>
+        {data.map((e,i)=>{
+          return(
+            <div className='p-2 w-full mt-2' key={i}>
+                <div className='flex'>
+                    <p className='text-yellow-500'>{e.name}</p>
+                    <p className='ml-2'>{new Date(e.timestamp).toLocaleString()}</p>
+                </div>
+                <p>{e.thought}</p>
+            </div>
+          )
+        })
+
+        }
+
+        </div>    
+
+      }
     </div>
   )
 }
