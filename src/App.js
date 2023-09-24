@@ -23,8 +23,8 @@ function App() {
         <Route path="/" element={<Cards/>} />
         <Route path="/addmovie" element={<Addmovie/>} />
         <Route path="/detail/:id" element={<Detail/>} />
-        <Route path="/login" element={<Login/>} />
-        <Route path="/signup" element={<Signup/>} />
+        {/* <Route path="/login" element={<Login/>} />
+        <Route path="/signup" element={<Signup/>} /> */}
       </Routes>
     </div>
     </Appstate.Provider>

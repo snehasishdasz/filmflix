@@ -17,7 +17,7 @@ const Header = () => {
       </span>
       </Link>
 
-      {useAppstate.login ?
+      
           <Link to={'/addmovie'}>
           <h1 className="text-lg text-white flex items-center cursor-pointer">
               <Button>
@@ -26,15 +26,7 @@ const Header = () => {
               </Button>
           </h1>
           </Link>
-          :
-          <Link to={'/login'}>
-          <h1 className="text-lg bg-green-500 text-white flex items-center cursor-pointer">
-              <Button>
-                  <span className="text-white font-medium capitalize">Login</span>
-              </Button>
-          </h1>
-          </Link>
-      }
+          
     </div>
   );
 };

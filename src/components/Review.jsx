@@ -11,13 +11,14 @@ const Review = ({id,prevRating,userRated}) => {
   const[reviewsLoading, setReviewsLoading]=useState(false);
   const[form,setForm]=useState("");
   const [data,setData]=useState([]);
+  const [newAdded,setNewAdded]=useState(0);
 
   const sendReview = async() =>{
     setLoading(true);
     try{
       await addDoc(reviewsRef,{
         movieid: id,
-        name: "bikash",
+        name: "Mysterious",
         rating: rating,
         thought: form,
         timestamp: new Date().getTime()
@@ -28,15 +29,16 @@ const Review = ({id,prevRating,userRated}) => {
         rated: userRated+1
       })
 
-
+      setRating(0);
+      setForm("");
+      setNewAdded(newAdded + 1 );
       swal({
         title: "Review Sent",
         icon: "success",
         buttons: false,
         timer: 3000
     })
-    setRating(0);
-    setForm("");
+    
     }catch(error){
       swal({
         title: error.message ,
@@ -52,6 +54,7 @@ const Review = ({id,prevRating,userRated}) => {
   useEffect(()=>{
     async function getData(){
       setReviewsLoading(true);
+      setData([]);
       let quer = query(reviewsRef,where('movieid', '==', id))
       const querySnapshot = await getDocs(quer);
 
@@ -62,7 +65,7 @@ const Review = ({id,prevRating,userRated}) => {
       setReviewsLoading(false);
     }
     getData();
-  },[])
+  },[newAdded])
 
 
 
