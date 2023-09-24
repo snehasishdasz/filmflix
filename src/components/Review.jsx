@@ -80,7 +80,7 @@ const Review = ({id,prevRating,userRated}) => {
       <input 
       value={form}
       onChange={(e)=> setForm(e.target.value)}
-        placeholder='Shae your thoughts here...'
+        placeholder='Share your thoughts here...'
         className='w-full p-2 outline-none bg-gray-800'
       />
       <button onClick={sendReview} className='w-full p-2 flex justify-center bg-green-600'>{loading ? <TailSpin height={20} color='white'/> : "Share" }</button>
